@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
@@ -26,8 +25,10 @@ class PasswordController extends Controller
     {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+            'password'         => ['required', Password::defaults(), 'confirmed'],
         ]);
+
+        // ds($validated);
 
         $request->user()->update([
             'password' => $validated['password'],

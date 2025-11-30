@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
@@ -20,7 +19,7 @@ class ProfileController extends Controller
     {
         return Inertia::render('settings/profile', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
-            'status' => $request->session()->get('status'),
+            'status'          => $request->session()->get('status'),
         ]);
     }
 
@@ -59,5 +58,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function store(StorePostRequest $request, CreatePostAction $action)
+    {
+        $post = $action->execute($request->validated());
+        return to_route('posts.index');
     }
 }
